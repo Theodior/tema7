@@ -23,7 +23,21 @@
 
     </div>
     <script>
-        document.querySelector("#content");
+        const content = document.querySelector("#content");
+
+        const første = document.querySelector("#content div");
+
+        const anden = document.querySelector("#content div + div");
+        //const anden = document.querySelector("#content div:nth-child(2)");
+
+        const tredje = document.querySelector("#content div + div + div img");
+
+        console.log(content);
+        console.log(første);
+        console.log(anden);
+        console.log(tredje);
+
+        //document.querySelector("#content");
         //console.log(document.querySelector("#content"));
         //console.log(document.querySelector("#content div"));
         //console.log(document.querySelector("#content div + div"));
@@ -31,6 +45,6 @@
         //console.log(document.querySelector("#content div a"));
         //console.log(document.querySelector("#content div + div a"));
         //console.log(document.querySelector("#content div + div a"));
-        console.log(document.querySelector("img"));
+        //console.log(document.querySelector("img"));
     </script>
 </body></html>
