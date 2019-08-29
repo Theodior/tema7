@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+
+    <article>
+
+
+    </article>
+
+    <script>
+        const personer = [{
+
+                "fornavn": "Theodor",
+                "efternavn": "Krummes",
+                "email": "Theodor.krummes@hotmail.dk"
+            },
+            {
+                "fornavn": "Jens",
+                "efternavn": "Sørensen",
+                "email": "Jens.Sørensen@hotmail.dk"
+            },
+
+            {
+                "fornavn": "Peter",
+                "efternavn": "Madsen",
+                "email": "Peter.Madsen@hotmail.dk"
+            },
+        ];
+
+        personer.forEach(personer => {
+            //console.log(`${personer.fornavn} ${personer.efternavn}`);
+
+            document.querySelector("article").innerHTML += `<p>${personer.fornavn} ${personer.efternavn}</p>`
+
+        })
+    </script>
+</body></html>
