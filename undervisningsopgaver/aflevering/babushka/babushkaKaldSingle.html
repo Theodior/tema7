@@ -244,8 +244,9 @@
                     klon.querySelector(".alder").textContent += person.gsx$pris.$t;
                     modtagerKloner.appendChild(klon);
                     modtagerKloner.lastElementChild.addEventListener("click", () => {
-                        visSingle(person)
+                        location.href = `babushkaSingle.html?navn=${person.gsx$navn.$t}`
                     });
+
                 }
 
             })
