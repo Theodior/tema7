@@ -4,22 +4,25 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>pop-up</title>
     <link rel="stylesheet" href="">
 
     <style>
         img {
-            width: 100%;
+            width: 30%;
         }
 
         .personliste {
+            text-align: center;
             display: grid;
-            grid-gap: 5px;
-            grid-template-columns: repeat(3, fr)
+            grid-gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+            max-width: 1080px;
+            margin: 0 auto;
         }
 
         .grid {
-            border: 1px solid black;
+
             height: 100%;
 
 
@@ -27,7 +30,15 @@
 
         }
 
+        article:nth-child(even) {
 
+            /*background: rgba(119, 114, 114, 0.27);*/
+        }
+
+        article:nth-child(odd) {
+
+            background: #9b9a9a;
+        }
 
         @media screen and (min-width:600px) {
 
@@ -74,16 +85,9 @@
         }
 
         .valgt {
-            margin-right: 10px;
+            background-color: red;
 
-        }
 
-        .mae {
-            margin-right: 10px;
-        }
-
-        .koe {
-            margin-right: 10px;
         }
 
         h1 {
@@ -96,14 +100,61 @@
             font-family: sans-serif;
         }
 
+        p {
+            font-family: sans-serif;
+        }
+
+        #popup {
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 3, 3, 0.7);
+            display: none;
+
+        }
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
+
+        #overskrift {
+            display: flex;
+            justify-content: center;
+            font-size: 4rem;
+            font-family: sans-serif;
+            color: white;
+
+        }
+
+        .background {
+            background-color: rgba(255, 0, 0, 0.29);
+        }
     </style>
 </head>
 
+<header>
+    <section class="background">
+        <div id="overskrift">Bistro Babushka</div>
+    </section>
+</header>
+
 <nav>
-    <button class="filter valgt" data-køn="alle">Alle</button>
-    <button class="filter mae" data-køn="m">Mænd</button>
-    <button class="filter koe" data-køn="k">Kvinder</button>
-    <button class="filter an" data-køn="andet">Andet</button>
+    <button class="filter valgt" data-kategori="alle">Alle</button>
+    <button class="filter" data-kategori="forretter">Forretter</button>
+    <button class="filter" data-kategori="hovedretter">Hovedretter</button>
+    <button class="filter" data-kategori="desserter">Desserter</button>
+    <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
 </nav>
 
 <h1>Alle</h1>
@@ -113,15 +164,37 @@
     <template>
         <article class="grid">
             <h2></h2>
-            <p class="github"></p>
             <img src="" alt="">
-            <!--            <a href="url"></a>-->
-            <p class="alder"></p>
+            <p class="github"></p>
+            <p class="alder">kr</p>
 
 
         </article>
     </template>
+
+    <div id="popup">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltPerson">
+                <h2></h2>
+                <img class="billedeo" src="" alt="">
+                <p class="githubo"></p>
+            </article>
+
+        </section>
+
+    </div>
+
     <section class="personliste"></section>
+
+    <footer id="kontakt">
+        <p>Bistro Babushka <br>
+            Frodesgade 32 <br>
+            1940 København K<br><br>
+            <span style="color: #534088">babushka@mail.dk <br>
+                +45 34251617</span>
+
+    </footer>
     <script>
         document.addEventListener("DOMContentLoaded", getjson);
 
@@ -132,7 +205,7 @@
 
         async function getjson() {
 
-            let jsondata = await fetch("https://spreadsheets.google.com/feeds/list/1Xge7slZ9dEOTCn1Yxl3OE4xgvrXOL8Y_iu3WN1yGB1U/od6/public/values?alt=json");
+            let jsondata = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
 
             console.log("jsondata", jsondata);
             minJson = await jsondata.json();
@@ -145,18 +218,45 @@
 
             modtagerKloner.innerHTML = "";
 
+
             minJson.feed.entry.forEach((person) => {
 
-                if (filter == "alle" || filter == person.gsx$køn.$t) {
+                if (filter == "alle" || filter == person.gsx$kategori.$t) {
                     const klon = temp.cloneNode(true).content;
                     klon.querySelector("h2").textContent = person.gsx$navn.$t;
-                    klon.querySelector(".github").textContent = person.gsx$github.$t;;
-                    klon.querySelector("img").src = person.gsx$billede.$t;
-                    klon.querySelector(".alder").textContent = person.gsx$alder.$t;
+                    klon.querySelector(".github").textContent = person.gsx$kort.$t;;
+                    /*klon.querySelector("img").src = person.gsx$billede.$t;*/
+
+                    const img = klon.querySelector("img");
+                    // <img src="imgs/small/baltiskbondesuppe-sm.jpg">
+
+                    img.src = "imgs/small/" + ret.gsx$billede.$t + "-sm.jpg";
+                    //img.alt = "Billede af " + /imgs/.gsx$billede.$t;
+
+                    klon.querySelector(".alder").textContent += person.gsx$pris.$t;
                     modtagerKloner.appendChild(klon);
+                    modtagerKloner.lastElementChild.addEventListener("click", () => {
+                        visSingle(person)
+                    });
                 }
 
             })
+        }
+
+        function visSingle(person) {
+            document.querySelector("#popup").style.display = "block";
+            document.querySelector("#popup .luk").addEventListener("click", lunkSingle);
+            document.querySelector(".enkeltPerson h2").textContent = person.gsx$navn.$t;
+            document.querySelector(".enkeltPerson .billedeo").src = person.gsx$billede.$t;
+            document.querySelector(".enkeltPerson .billedeo").alt = person.gsx$navn.$t;
+            document.querySelector(".enkeltPerson .githubo").textContent = person.gsx$lang.$t;
+
+
+        }
+
+
+        function lunkSingle() {
+            document.querySelector("#popup").style.display = "none";
         }
 
         function addEventListenersToButtons() {
@@ -166,12 +266,13 @@
         }
 
         function filtrering() {
-            filter = this.dataset.køn;
+            filter = this.dataset.kategori;
             document.querySelector("h1").textContent = this.textContent;
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.classList.remove("valgt");
+            })
+            this.classList.add("valgt");
             visJson();
         }
-
     </script>
-</body>
-
-</html>
+</body></html>

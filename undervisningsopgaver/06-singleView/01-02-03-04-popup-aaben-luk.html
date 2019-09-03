@@ -9,17 +9,20 @@
 
     <style>
         img {
-            width: 100%;
+            width: 30%;
         }
 
         .personliste {
+            text-align: center;
             display: grid;
-            grid-gap: 5px;
-            grid-template-columns: repeat(3, fr)
+            grid-gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+            max-width: 1080px;
+            margin: 0 auto;
         }
 
         .grid {
-            border: 1px solid black;
+
             height: 100%;
 
 
@@ -27,7 +30,15 @@
 
         }
 
+        article:nth-child(even) {
 
+            /*background: rgba(119, 114, 114, 0.27);*/
+        }
+
+        article:nth-child(odd) {
+
+            background: #9b9a9a;
+        }
 
         @media screen and (min-width:600px) {
 
@@ -116,7 +127,6 @@
             right: 0;
             font-size: 2rem;
         }
-
     </style>
 </head>
 
@@ -229,8 +239,5 @@
             this.classList.add("valgt");
             visJson();
         }
-
     </script>
-</body>
-
-</html>
+</body></html>
