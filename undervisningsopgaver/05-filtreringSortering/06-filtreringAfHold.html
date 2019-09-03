@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Bistro Babushka</title>
     <link rel="stylesheet" href="">
 
     <style>
@@ -88,14 +88,20 @@
         h2 {
             font-family: sans-serif;
         }
+
+        p {
+            font-family: sans-serif;
+        }
     </style>
 </head>
 
 <nav>
     <button class="filter valgt" data-køn="alle">Alle</button>
-    <button class="filter" data-køn="m">Mænd</button>
-    <button class="filter" data-køn="k">Kvinder</button>
-    <button class="filter" data-køn="andet">Andet</button>
+    <button class="filter" data-køn="m" data-hold="alle">Mænd</button>
+    <button class="filter" data-køn="k" data-hold="alle">Kvinder</button>
+    <button class="filter" data-køn="andet" data-hold="alle">Andet</button>
+    <button class="filter" data-køn="m" data-hold="a">Mænd På Hold A</button>
+
 </nav>
 
 <h1>Alle</h1>
@@ -120,7 +126,9 @@
         const modtagerKloner = document.querySelector(".personliste");
         const temp = document.querySelector("template");
         let personer;
-        let filter = "alle";
+        let filterKøn = "alle";
+        let filterHold = "alle";
+
 
         async function getjson() {
 
@@ -139,7 +147,7 @@
 
             minJson.feed.entry.forEach((person) => {
 
-                if (filter == "alle" || filter == person.gsx$køn.$t) {
+                if ((filterKøn == "alle" || filterKøn == person.gsx$køn.st) && (filterHold == "alle" || filterHold == person.gsx$hold.$t)) {
                     const klon = temp.cloneNode(true).content;
                     klon.querySelector("h2").textContent = person.gsx$navn.$t;
                     klon.querySelector(".github").textContent = person.gsx$github.$t;;
@@ -158,7 +166,9 @@
         }
 
         function filtrering() {
-            filter = this.dataset.køn;
+            filterKøn = this.dataset.køn;
+            filterHold = this.dataset.hold;
+
             document.querySelector("h1").textContent = this.textContent;
             document.querySelectorAll(".filter").forEach(elm => {
                 elm.classList.remove("valgt");

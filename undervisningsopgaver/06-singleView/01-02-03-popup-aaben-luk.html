@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>pop-up</title>
     <link rel="stylesheet" href="">
 
     <style>
@@ -88,6 +88,35 @@
         h2 {
             font-family: sans-serif;
         }
+
+        p {
+            font-family: sans-serif;
+        }
+
+        #popup {
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 3, 3, 0.7);
+            display: none;
+
+        }
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
+
     </style>
 </head>
 
@@ -113,6 +142,20 @@
 
         </article>
     </template>
+
+    <div id="popup">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltPerson">
+                <h2></h2>
+                <img class="billedeo" src="" alt="">
+                <p>Github: <a class="githubo" href=""></a></p>
+            </article>
+
+        </section>
+
+    </div>
+
     <section class="personliste"></section>
     <script>
         document.addEventListener("DOMContentLoaded", getjson);
@@ -146,9 +189,29 @@
                     klon.querySelector("img").src = person.gsx$billede.$t;
                     klon.querySelector(".alder").textContent = person.gsx$alder.$t;
                     modtagerKloner.appendChild(klon);
+                    modtagerKloner.lastElementChild.addEventListener("click", () => {
+                        visSingle(person)
+                    });
                 }
 
             })
+        }
+
+        function visSingle(person) {
+            document.querySelector("#popup").style.display = "block";
+            document.querySelector("#popup .luk").addEventListener("click", lunkSingle);
+            document.querySelector(".enkeltPerson h2").textContent = person.gsx$navn.$t;
+            document.querySelector(".enkeltPerson .billedeo").src = person.gsx$billede.$t;
+            document.querySelector(".enkeltPerson .billedeo").alt = person.gsx$navn.$t;
+            document.querySelector(".enkeltPerson .githubo").href = `http://github.com/${person.gsx$github.$t}`;
+            document.querySelector(".enkeltPerson .githubo").textContent = `http://github.com/${person.gsx$github.$t}`;
+
+
+        }
+
+
+        function lunkSingle() {
+            document.querySelector("#popup").style.display = "none";
         }
 
         function addEventListenersToButtons() {
@@ -166,5 +229,8 @@
             this.classList.add("valgt");
             visJson();
         }
+
     </script>
-</body></html>
+</body>
+
+</html>

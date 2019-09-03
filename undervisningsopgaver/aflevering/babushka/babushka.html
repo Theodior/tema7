@@ -74,9 +74,16 @@
         }
 
         .valgt {
-            background-color: red;
+            margin-right: 10px;
 
+        }
 
+        .mae {
+            margin-right: 10px;
+        }
+
+        .koe {
+            margin-right: 10px;
         }
 
         h1 {
@@ -88,14 +95,15 @@
         h2 {
             font-family: sans-serif;
         }
+
     </style>
 </head>
 
 <nav>
     <button class="filter valgt" data-køn="alle">Alle</button>
-    <button class="filter" data-køn="m">Mænd</button>
-    <button class="filter" data-køn="k">Kvinder</button>
-    <button class="filter" data-køn="andet">Andet</button>
+    <button class="filter mae" data-køn="m">Mænd</button>
+    <button class="filter koe" data-køn="k">Kvinder</button>
+    <button class="filter an" data-køn="andet">Andet</button>
 </nav>
 
 <h1>Alle</h1>
@@ -160,11 +168,10 @@
         function filtrering() {
             filter = this.dataset.køn;
             document.querySelector("h1").textContent = this.textContent;
-            document.querySelectorAll(".filter").forEach(elm => {
-                elm.classList.remove("valgt");
-            })
-            this.classList.add("valgt");
             visJson();
         }
+
     </script>
-</body></html>
+</body>
+
+</html>
